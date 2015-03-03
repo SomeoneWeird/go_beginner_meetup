@@ -20,7 +20,7 @@ func main() {
 
 	err = json.Unmarshal(body, &melbourne)
 
-	fmt.Printf("Response: %v", melbourne.Weather.CurrentTemp)
+	fmt.Printf("The weather in %v is %v", melbourne.Name, melbourne.Weather.NormalisedCurrentTemp())
 }
 
 func getWeatherResponseBody() ([]byte, error) {
@@ -53,4 +53,8 @@ type City struct {
 type Weather struct {
 	CurrentTemp float64 `json:"temp"`
 	MaxTemp     float64 `json:"mtepm_max"`
+}
+
+func (w Weather) NormalisedCurrentTemp() float64 {
+	return w.CurrentTemp / 10
 }
