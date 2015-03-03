@@ -56,5 +56,5 @@ type Weather struct {
 }
 
 func (w Weather) NormalisedCurrentTemp() float64 {
-	return w.CurrentTemp / 10
+	return w.CurrentTemp - 273.15
 }
