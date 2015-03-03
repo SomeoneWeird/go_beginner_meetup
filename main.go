@@ -10,6 +10,15 @@ import (
 // http://api.openweathermap.org/data/2.5/weather?q=Melbourne,au
 
 func main() {
+
+	http.HandleFunc("/", weatherHandler)
+
+	http.ListenAndServe(":5000", nil)
+
+}
+
+func weatherHandler(w http.ResponseWriter, r *http.Request) {
+
 	body, err := getWeatherResponseBody()
 
 	if err != nil {
@@ -20,7 +29,8 @@ func main() {
 
 	err = json.Unmarshal(body, &melbourne)
 
-	fmt.Printf("The weather in %v is %v", melbourne.Name, melbourne.Weather.NormalisedCurrentTemp())
+	fmt.Fprintf(w, "The weather in %v is %v", melbourne.Name, melbourne.Weather.NormalisedCurrentTemp())
+
 }
 
 func getWeatherResponseBody() ([]byte, error) {
