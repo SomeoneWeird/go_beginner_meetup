@@ -36,7 +36,17 @@ func weatherHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	fmt.Fprintf(w, "The weather in %v is %v", city.Name, city.Weather.NormalisedCurrentTemp())
+	fmt.Printf("The weather in %v is %v", city.Name, city.Weather.NormalisedCurrentTemp())
+
+	response, err := json.Marshal(&city)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(response)
 
 }
 
@@ -71,7 +81,7 @@ type City struct {
 
 type Weather struct {
 	CurrentTemp float64 `json:"temp"`
-	MaxTemp     float64 `json:"mtepm_max"`
+	MaxTemp     float64 `json:"temp_max"`
 }
 
 func (w Weather) NormalisedCurrentTemp() float64 {
