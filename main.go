@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -15,7 +16,11 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("Response: %s", body)
+	melbourne := City{}
+
+	err = json.Unmarshal(body, &melbourne)
+
+	fmt.Printf("Response: %s", melbourne.Name)
 }
 
 func getWeatherResponseBody() ([]byte, error) {
