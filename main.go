@@ -17,14 +17,14 @@ func main() {
 		return
 	}
 
-	defer resp.Body.Close()
-
 	body, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
 		fmt.Printf("Error reading weather: %v", err)
 		return
 	}
+
+	defer resp.Body.Close()
 
 	fmt.Printf("Response: %s", body)
 
