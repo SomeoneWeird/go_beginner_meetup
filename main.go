@@ -28,6 +28,9 @@ func weatherHandler(w http.ResponseWriter, r *http.Request) {
 	melbourne := City{}
 
 	err = json.Unmarshal(body, &melbourne)
+	if err != nil {
+		panic(err)
+	}
 
 	fmt.Fprintf(w, "The weather in %v is %v", melbourne.Name, melbourne.Weather.NormalisedCurrentTemp())
 
