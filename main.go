@@ -19,7 +19,11 @@ func main() {
 
 func weatherHandler(w http.ResponseWriter, r *http.Request) {
 
-	body, err := getWeatherResponseBody()
+	r.ParseForm()
+
+	cityName := r.FormValue("city")
+
+	body, err := getWeatherResponseBody(cityName)
 
 	if err != nil {
 		panic(err)
@@ -36,9 +40,11 @@ func weatherHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getWeatherResponseBody() ([]byte, error) {
+func getWeatherResponseBody(cityName string) ([]byte, error) {
 
-	resp, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=Melbourne,au")
+	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?q=%v,au", cityName)
+
+	resp, err := http.Get(url)
 
 	if err != nil {
 		fmt.Printf("Error getting weather: %v", err)
