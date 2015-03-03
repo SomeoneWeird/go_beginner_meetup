@@ -29,14 +29,14 @@ func weatherHandler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	melbourne := City{}
+	city := City{}
 
-	err = json.Unmarshal(body, &melbourne)
+	err = json.Unmarshal(body, &city)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Fprintf(w, "The weather in %v is %v", melbourne.Name, melbourne.Weather.NormalisedCurrentTemp())
+	fmt.Fprintf(w, "The weather in %v is %v", city.Name, city.Weather.NormalisedCurrentTemp())
 
 }
 
