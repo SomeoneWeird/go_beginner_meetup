@@ -20,7 +20,7 @@ func main() {
 
 	err = json.Unmarshal(body, &melbourne)
 
-	fmt.Printf("Response: %s", melbourne.Name)
+	fmt.Printf("Response: %v", melbourne.Weather.CurrentTemp)
 }
 
 func getWeatherResponseBody() ([]byte, error) {
