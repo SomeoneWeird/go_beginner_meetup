@@ -9,7 +9,12 @@ import (
 // http://api.openweathermap.org/data/2.5/weather?q=Melbourne,au
 
 func main() {
-	body, _ := getWeatherResponseBody()
+	body, err := getWeatherResponseBody()
+
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Printf("Response: %s", body)
 }
 
