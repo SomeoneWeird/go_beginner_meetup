@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -9,11 +10,22 @@ import (
 
 func main() {
 
-	_, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=Melbourne,au")
+	resp, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=Melbourne,au")
 
 	if err != nil {
 		fmt.Printf("Error getting weather: %v", err)
 		return
 	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		fmt.Printf("Error reading weather: %v", err)
+		return
+	}
+
+	fmt.Printf("Response: %s", body)
 
 }
